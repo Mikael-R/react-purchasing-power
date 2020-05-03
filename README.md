@@ -33,7 +33,7 @@ Npm: `npm start`
 Yarn: `yarn start`
 
 #### Environment Variable
-In .env file at root project, change the `REACT_APP_SCRAP_API` to the url of the api (scrap-purchasing-power project) and `REACT_APP_SCRAP_API_PORT` to the port of api 
+In .env file at root project, change the `REACT_APP_SCRAP_API` to the url of the api (scrap-purchasing-power project)
 
 The default port of React project is 3000,but you can change it changing the PORT environment variable (I suggest in package.json at script configuration)
 
