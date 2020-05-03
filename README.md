@@ -9,7 +9,7 @@ This is the front-end project of the Purchasing Power, made with React, where th
 #### Requirements
 - Node 
 - Npm or Yarn
-- Project [scrap-purchasing-power](https://github.com/FelipeNathan/purchasing-power/tree/master/scrap-purchasing-power) (this project use the scrap api project to get minimun wage data)
+- Project [scrap-purchasing-power](https://github.com/FelipeNathan/scrap-purchasing-power) (this project use the scrap api project to get minimun wage data)
 
 #### Setup
 First clone our repository
