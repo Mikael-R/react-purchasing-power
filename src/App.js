@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import Country from './component/country'
 import Card from 'react-bootstrap/Card'
@@ -7,95 +7,98 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import LoadingScreen from 'react-loading-screen'
 import * as apiService from './service/backend-api-service'
+import { GiPodiumWinner, GiPodiumSecond, GiPodium } from 'react-icons/gi'
 
-export default class App extends React.Component {
+export default function App() {
 
-  constructor(props) {
-    super(props)
+  const firstIcon = <GiPodiumWinner size={'5em'} className="text-success"/>
+  const secondIcon = <GiPodiumSecond size={'5em'} className="text-danger"/>
+  const podiumIcon = <GiPodium size={'5em'} className="text-secondary"/>
 
-    this.state = {
-      result: '',
-      countries: []
+  const [{ country1Icon, country2Icon }, setResult] = useState({
+    country1Icon: podiumIcon,
+    country2Icon: podiumIcon
+  })
+
+  const [countries, setCountries] = useState([])
+  const [country1, setSelectedCountry1] = useState(null)
+  const [country2, setSelectedCountry2] = useState(null)
+
+  useEffect(() => {
+    apiService.getCountries().then(
+      countries => setCountries(countries.data),
+      err => console.log(err)
+    )
+  }, [])
+
+  useEffect(() => {
+    console.log(country1)
+    if (country1 && country2) {
+      compareCountries()
     }
-  }
+  }, [country1, country2])
 
-  componentDidMount = () => {
 
-    apiService.getCountries().then(countries => {
-      this.setState({ countries: countries.data })
-    }, err => console.log(err))
+  function onSelectCountry(country, elementName) {
 
-  }
-
-  onSelectCountry = (countryName, country, elementName) => {
-
-    console.log(country)
     if (elementName === "Country1") {
-      this.setState({ countryName1: countryName, country1: country })
+      setSelectedCountry1(country)
     } else {
-      this.setState({ countryName2: countryName, country2: country })
-    }
-
-    if (this.state.country1 && this.state.country2) {
-      this.compareCountries()
-    } else {
-      this.setState({ result: '' })
+      setSelectedCountry2(country)
     }
   }
 
-  compareCountries = () => {
+  function compareCountries() {
 
-    const { country1, country2, countryName1, countryName2 } = this.state
-
-
-    const bigMacPrice1 = country1.data[3]
-    const bigMacPrice2 = country2.data[3]
+    const bigMacPrice1 = country1.bmi.dollar_price
+    const bigMacPrice2 = country2.bmi.dollar_price
 
     const diff = bigMacPrice1 - bigMacPrice2
 
-    let result = ''
-
-    if (diff !== 0) {
-      result = `O poder de compra do país ${parseFloat(diff) >= 0 ? countryName1 : countryName2} é maior`
+    if (diff > 0) {
+      setResult({
+        country1Icon: firstIcon,
+        country2Icon: secondIcon,
+      })
+    } else if (diff < 0) {
+      setResult({
+        country1Icon: secondIcon,
+        country2Icon: firstIcon,
+      })
     } else {
-      result = `O poder de compra dos países são iguais`
+      setResult({
+        country1Icon: podiumIcon,
+        country2Icon: podiumIcon
+      })
     }
-
-    this.setState({ result })
   }
 
-  getResultLabel = (powerfull, powerfullCount, powerless, powerlessCount) =>
-    `No(a) ${powerfull.country} da para comprar até ${powerfullCount.toFixed(0)} Big Mac's, e no(a) ${powerless.country} da para comprar até ${powerlessCount.toFixed(0)}, portanto, o poder de comprar do(a) ${powerfull.country} é maior`;
-
-  render() {
-
-    if (this.state.countries.length === 0)
-      return (
-        <LoadingScreen
-          loading={true}
-          bgColor='#f1f1f1'
-          spinnerColor='#9ee5f8'
-          textColor='#676767'
-          text='Carregando salários mínimos dos países...'
-        />
-      )
-
-    return (
-
-      <Container>
+  return (
+    <Container>
+      <LoadingScreen
+        loading={countries.length === 0}
+        bgColor='#f1f1f1'
+        spinnerColor='#9ee5f8'
+        textColor='#676767'
+        text='Carregando dados...'
+      >
         <Form>
           <Form.Row>
             <Col>
               <Card>
-                <Card.Header>Dados do primeiro país</Card.Header>
+                <Card.Header> Dados do primeiro país </Card.Header>
                 <Card.Body>
                   <Country
-                    onPriceChange={this.onChangePrice}
-                    onCountrySelected={this.onSelectCountry}
-                    countries={this.state.countries}
+                    onCountrySelected={onSelectCountry}
+                    countries={countries}
                     name="Country1"
                   />
                 </Card.Body>
+                <Card.Footer>
+                  <div className="d-flex justify-content-center">
+                    {country1Icon}
+                  </div>
+                </Card.Footer>
               </Card>
             </Col>
             <Col>
@@ -103,23 +106,21 @@ export default class App extends React.Component {
                 <Card.Header>Dados do segundo país</Card.Header>
                 <Card.Body>
                   <Country
-                    onPriceChange={this.onChangePrice}
-                    onCountrySelected={this.onSelectCountry}
-                    countries={this.state.countries}
+                    onCountrySelected={onSelectCountry}
+                    countries={countries}
                     name="Country2"
                   />
-
                 </Card.Body>
+                <Card.Footer>
+                  <div className="d-flex justify-content-center">
+                    {country2Icon}
+                  </div>
+                </Card.Footer>
               </Card >
             </Col>
           </Form.Row>
-
-          <div className="d-flex justify-content-center">
-            <label id="result">{this.state.result}</label>
-          </div>
-
         </Form>
-      </Container>
-    );
-  }
+      </LoadingScreen>
+    </Container>
+  );
 }

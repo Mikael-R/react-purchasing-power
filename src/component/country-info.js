@@ -9,49 +9,33 @@ export default function CountryInfo(props) {
         return null
     }
 
-    const { data, symbol } = props.countryInfo
-
-    const items = data.filter((value, i) => i < 4).map((value, i) => {
-        const info = infoMapper[i];
-        return (<ListGroup.Item> {info.label} : {info.format(value, symbol)} </ListGroup.Item>)
-    });
+    const { bmi, symbol, minWage, date } = props.countryInfo
 
     return (
         <ListGroup variant="flush">
-            {items}
+            <ListGroup.Item>
+                <p className="mb-1"> Salário mínimo: {currency(minWage, symbol)} </p>
+                <p className="mb-1"> <small className="text-muted"> Última coleta: {dateFormat(date, "dd/mm/yyyy")} </small> </p>
+                <p className="mb-1"> <small className="text-muted"> Dados de salário são coletados em: <a href="https://pt.countryeconomy.com/mercado-laboral/salario-minimo-nacional"> Country Economy</a> </small> </p>
+
+            </ListGroup.Item>
+            <ListGroup.Item>
+                Data da última coleta do BMI: {dateFormat(bmi.Date, "dd/mm/yyyy")}
+                <p className="mb-1"> <small className="text-muted"> Dados coletados em: <a href="https://www.quandl.com/data/ECONOMIST-The-Economist-Big-Mac-Index"> Quandl </a> </small> </p>
+            </ListGroup.Item>
+            <ListGroup.Item>Valor do Big Mac no país: {currency(bmi.local_price, symbol)}</ListGroup.Item>
+            <ListGroup.Item>Conversão da moeda em dollar: {currency(bmi.dollar_ex, "$")}</ListGroup.Item>
+            <ListGroup.Item>Valor do Big Mac em dolar: {currency(bmi.dollar_price, "$")}</ListGroup.Item>
         </ListGroup>
     )
-
 }
 
-const infoMapper = [{
-    label: "Última data da coleta",
-    format: (value) => dateFormat(value, "dd/mm/yyyy")
-}, {
-    label: "Valor do Big Mac no país",
-    format: (value, symbol) => new CurrencyInput({
+function currency(value, symbol) {
+    return new CurrencyInput({
         value: value,
         decimalSeparator: ",",
         thousandSeparator: ".",
         prefix: `${symbol || ''} `,
         precision: 2
     }).getMaskedValue()
-}, {
-    label: "Conversão da moeda em dollar",
-    format: (value, symbol) => new CurrencyInput({
-        value: value,
-        decimalSeparator: ",",
-        thousandSeparator: ".",
-        prefix: `$ `,
-        precision: 2
-    }).getMaskedValue()
-}, {
-    label: "Valor do Big Mac em dolar",
-    format: (value, symbol) => new CurrencyInput({
-        value: value,
-        decimalSeparator: ",",
-        thousandSeparator: ".",
-        prefix: `$ `,
-        precision: 2
-    }).getMaskedValue()
-}]
+}

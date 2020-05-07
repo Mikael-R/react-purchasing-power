@@ -27,7 +27,7 @@ export default function Country(props) {
             setLoading(false)
             setCountryInfo(info.data)
 
-            props.onCountrySelected(country.label, info.data, props.name)
+            props.onCountrySelected(info.data, props.name)
         }).catch(err => {
 
             setLoading(false)
@@ -38,27 +38,10 @@ export default function Country(props) {
     return (
         <>
             <Form.Group>
-                <Form.Label>País</Form.Label>
                 <Select
                     options={countries}
-                    onChange={(e, maskedValue, floatValue) => handleSelect(e, maskedValue, floatValue)}>
-                </Select>
-            </Form.Group>
-
-            <Form.Group>
-                <Form.Label>Salário mínimo</Form.Label>
-                <InputGroup>
-                    <InputGroup.Prepend>
-                        <InputGroup.Text></InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <CurrencyInput
-                        decimalSeparator=","
-                        thousandSeparator="."
-                        className="form-control"
-                        value={countryInfo ? countryInfo.minWage : 0}
-                        prefix={countryInfo ? countryInfo.symbol : ''}
-                        readOnly />
-                </InputGroup>
+                    onChange={handleSelect} 
+                    placeholder={"Selecione um país..."}/>
             </Form.Group>
 
             {isLoading ? <Loading /> : <CountryInfo countryInfo={countryInfo} />}
