@@ -4,8 +4,9 @@ import Country from './component/country'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
+import Col from 'react-bootstrap/Col'
 import LoadingScreen from 'react-loading-screen'
-import apiScrap from './service/api-scrap'
+import * as apiService from './service/backend-api-service'
 
 export default class App extends React.Component {
 
@@ -13,8 +14,6 @@ export default class App extends React.Component {
     super(props)
 
     this.state = {
-      price1: 1,
-      price2: 1,
       result: '',
       countries: []
     }
@@ -22,48 +21,42 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
 
-    apiScrap.getWages().then(response => {
-      this.setState({
-        countries: response.data,
-        country1: response.data[0],
-        country2: response.data[1]
-      })
+    apiService.getCountries().then(countries => {
+      this.setState({ countries: countries.data })
     }, err => console.log(err))
 
   }
 
-  onSelectCountry = (country, elementName) => {
+  onSelectCountry = (countryName, country, elementName) => {
+
+    console.log(country)
     if (elementName === "Country1") {
-      this.setState({ country1: country })
+      this.setState({ countryName1: countryName, country1: country })
     } else {
-      this.setState({ country2: country })
+      this.setState({ countryName2: countryName, country2: country })
+    }
+
+    if (this.state.country1 && this.state.country2) {
+      this.compareCountries()
+    } else {
+      this.setState({ result: '' })
     }
   }
 
+  compareCountries = () => {
 
-  onChangePrice = (value, elementName) => {
-    if (elementName === "Country1") {
-      this.setState({ price1: parseFloat(value) })
-    } else {
-      this.setState({ price2: parseFloat(value) })
-    }
-  }
+    const { country1, country2, countryName1, countryName2 } = this.state
 
-  handleCalcular = () => {
 
-    const { country1, price1, country2, price2 } = this.state
+    const bigMacPrice1 = country1.data[3]
+    const bigMacPrice2 = country2.data[3]
 
-    const countBigMac1 = country1.minWage / price1
-    const countBigMac2 = country2.minWage / price2
+    const diff = bigMacPrice1 - bigMacPrice2
 
-    const diff = countBigMac1 - countBigMac2;
+    let result = ''
 
-    let result = {}
-
-    if (diff > 0) {
-      result = this.getResultLabel(country1, countBigMac1, country2, countBigMac2)
-    } else if (diff < 0) {
-      result = this.getResultLabel(country2, countBigMac2, country1, countBigMac1)
+    if (diff !== 0) {
+      result = `O poder de compra do país ${parseFloat(diff) >= 0 ? countryName1 : countryName2} é maior`
     } else {
       result = `O poder de compra dos países são iguais`
     }
@@ -91,46 +84,40 @@ export default class App extends React.Component {
 
       <Container>
         <Form>
-          <Card>
-            <Card.Header>Dados do primeiro país</Card.Header>
-            <Card.Body>
-              <Country
-                onPriceChange={this.onChangePrice}
-                onCountrySelected={this.onSelectCountry}
-                countries={this.state.countries}
-                selectedCountry={this.state.country1}
-                name="Country1"
-              />
-            </Card.Body>
-          </Card>
+          <Form.Row>
+            <Col>
+              <Card>
+                <Card.Header>Dados do primeiro país</Card.Header>
+                <Card.Body>
+                  <Country
+                    onPriceChange={this.onChangePrice}
+                    onCountrySelected={this.onSelectCountry}
+                    countries={this.state.countries}
+                    name="Country1"
+                  />
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col>
+              <Card>
+                <Card.Header>Dados do segundo país</Card.Header>
+                <Card.Body>
+                  <Country
+                    onPriceChange={this.onChangePrice}
+                    onCountrySelected={this.onSelectCountry}
+                    countries={this.state.countries}
+                    name="Country2"
+                  />
 
-          <br />
-
-          <Card>
-            <Card.Header>Dados do segundo país</Card.Header>
-            <Card.Body>
-              <Country
-                onPriceChange={this.onChangePrice}
-                onCountrySelected={this.onSelectCountry}
-                countries={this.state.countries}
-                selectedCountry={this.state.country2}
-                name="Country2"
-              />
-
-            </Card.Body>
-          </Card >
-
-          <br />
-
-          <div className="d-flex justify-content-center">
-            <input className="btn btn-success" type="button" value="Calcular" onClick={this.handleCalcular} />
-          </div>
-
-          <br />
+                </Card.Body>
+              </Card >
+            </Col>
+          </Form.Row>
 
           <div className="d-flex justify-content-center">
             <label id="result">{this.state.result}</label>
           </div>
+
         </Form>
       </Container>
     );
