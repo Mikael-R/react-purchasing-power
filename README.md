@@ -37,14 +37,14 @@ In .env file at root project, change the `REACT_APP_SCRAP_API` to the url of the
 
 The default port of React project is 3000,but you can change it changing the PORT environment variable (I suggest in package.json at script configuration)
 
+#### Next Features
+- [ ] Add Ads
+
 ### Collaborators
 | [@FelipeNathan][felipenathan] |
 | :-------------------------------: |
 |       ![][p_felipenathan]         |
 |         Software Engineer         |
-
-#### Next Features
-- [ ] Add Ads
 
 [felipenathan]: http://github.com/FelipeNathan
 [p_felipenathan]: https://avatars2.githubusercontent.com/u/16759812?s=100&v=4
