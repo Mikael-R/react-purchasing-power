@@ -27,7 +27,7 @@ export default function CountryInfo(props) {
             <ListGroup.Item>
                 <h5 className="mb-1"> Salário mínimo: {format(minWage, symbol)} </h5>
                 <p className="mb-1">
-                    <small className="text-muted"> Última coleta: {dateFormat(date, "dd/mm/yyyy")} </small>
+                    <small className="text-muted"> Ano: {date} </small>
                     <br /> <small className="text-muted"> Dados de salário são coletados em: <a href="https://pt.countryeconomy.com/mercado-laboral/salario-minimo-nacional"> Country Economy</a> </small>
                 </p>
 
