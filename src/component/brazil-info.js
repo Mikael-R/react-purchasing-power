@@ -23,15 +23,15 @@ export default function BrasilInfo(props) {
     return (
         <>
             <h4><em>Big Mac Index</em> para o Brasil</h4>
-            <Table hover bordered>
+            <Table striped hover variant="light">
                 <thead>
                     <tr className="table-info">
-                        <th>Data</th>
-                        <th>Preço do Big Mac no Brasil</th>
-                        <th>Preço do Big Mac no EUA</th>
-                        <th>Taxa de câmbio no perído</th>
-                        <th>Índice de equilíbrio</th>
-                        <th>Taxa de Valorização do Real</th>
+                        <th className="align-middle text-center">Data</th>
+                        <th className="align-middle text-center">Preço do Big Mac no Brasil</th>
+                        <th className="align-middle text-center">Preço do Big Mac no EUA</th>
+                        <th className="align-middle text-center">Taxa de câmbio no perído</th>
+                        <th className="align-middle text-center">Índice de equilíbrio</th>
+                        <th className="align-middle text-center">Taxa de Valorização do Real</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,20 +39,20 @@ export default function BrasilInfo(props) {
                         brasilInfo.data.map((row, i) => {
                             return (
                                 <tr key={i}>
-                                    <td>{dateFormat(row[0], 'mmm/yyyy')}</td>
-                                    <td>{format(row[1], 'R$', 2)}</td>
-                                    <td>{format(row[2], 'US$', 2)}</td>
-                                    <td>{format(row[3], 'US$', 2)}</td>
-                                    <td>
+                                    <td className="align-middle text-center">{dateFormat(row[0], 'mmm/yyyy')} </td>
+                                    <td className="align-middle text-center">{format(row[1], 'R$', 2)}</td>
+                                    <td className="align-middle text-center">{format(row[2], 'US$', 2)}</td>
+                                    <td className="align-middle text-center">{format(row[3], 'US$', 2)}</td>
+                                    <td className="align-middle text-justify">
                                         {format(row[4], 'R$', 2)}
-                                        <p class="md-1">
+                                        <p className="md-1">
                                             <small className="text-muted">
                                                 O  Big Mac teria o mesmo valor no Brasil e no E.U.A se a taxa de câmbio fosse {format(row[4], 'R$', 2)} por US$ 1
                                             </small>
                                         </p>
                                     </td>
-                                    <td>
-                                        {format(row[5], '', 2)}% &nbsp;
+                                    <td className="align-middle text-center">
+                                        <span>{format(row[5], '', 2)}% </span>
                                         {parseFloat(row[5]) >= 0 ? <FaArrowUp className="text-success" /> : <FaArrowDown className="text-danger" />}
                                     </td>
                                 </tr>
