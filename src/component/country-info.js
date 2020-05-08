@@ -21,8 +21,8 @@ export default function CountryInfo(props) {
                 </p>
             </ListGroup.Item>
             <ListGroup.Item>Valor do Big Mac no país: {format(bmi.local_price, symbol)}</ListGroup.Item>
-            <ListGroup.Item>Conversão da moeda em dollar: {format(bmi.dollar_ex, "$")}</ListGroup.Item>
-            <ListGroup.Item>Valor do Big Mac em dolar: {format(bmi.dollar_price, "$")}</ListGroup.Item>
+            <ListGroup.Item>Conversão da moeda em dólar: {format(bmi.dollar_ex, "$")}</ListGroup.Item>
+            <ListGroup.Item>Valor do Big Mac em dólar: {format(bmi.dollar_price, "$")}</ListGroup.Item>
 
             <ListGroup.Item>
                 <h5 className="mb-1"> Salário mínimo: {format(minWage, symbol)} </h5>
