@@ -7,18 +7,12 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import LoadingScreen from 'react-loading-screen'
 import * as apiService from './service/backend-api-service'
-import { GiPodiumWinner, GiPodiumSecond, GiPodium } from 'react-icons/gi'
+import CountryCompare from './component/country-compare'
+import BrasilInfo from './component/brazil-info'
+import Header from './component/header'
+import BigMacIndex from './component/big-mac-index'
 
 export default function App() {
-
-  const firstIcon = <GiPodiumWinner size={'5em'} className="text-success"/>
-  const secondIcon = <GiPodiumSecond size={'5em'} className="text-danger"/>
-  const podiumIcon = <GiPodium size={'5em'} className="text-secondary"/>
-
-  const [{ country1Icon, country2Icon }, setResult] = useState({
-    country1Icon: podiumIcon,
-    country2Icon: podiumIcon
-  })
 
   const [countries, setCountries] = useState([])
   const [country1, setSelectedCountry1] = useState(null)
@@ -31,14 +25,6 @@ export default function App() {
     )
   }, [])
 
-  useEffect(() => {
-    console.log(country1)
-    if (country1 && country2) {
-      compareCountries()
-    }
-  }, [country1, country2])
-
-
   function onSelectCountry(country, elementName) {
 
     if (elementName === "Country1") {
@@ -48,79 +34,57 @@ export default function App() {
     }
   }
 
-  function compareCountries() {
-
-    const bigMacPrice1 = country1.bmi.dollar_price
-    const bigMacPrice2 = country2.bmi.dollar_price
-
-    const diff = bigMacPrice1 - bigMacPrice2
-
-    if (diff > 0) {
-      setResult({
-        country1Icon: firstIcon,
-        country2Icon: secondIcon,
-      })
-    } else if (diff < 0) {
-      setResult({
-        country1Icon: secondIcon,
-        country2Icon: firstIcon,
-      })
-    } else {
-      setResult({
-        country1Icon: podiumIcon,
-        country2Icon: podiumIcon
-      })
-    }
-  }
-
   return (
-    <Container>
-      <LoadingScreen
-        loading={countries.length === 0}
-        bgColor='#f1f1f1'
-        spinnerColor='#9ee5f8'
-        textColor='#676767'
-        text='Carregando dados...'
-      >
-        <Form>
-          <Form.Row>
-            <Col>
-              <Card>
-                <Card.Header> Dados do primeiro país </Card.Header>
-                <Card.Body>
-                  <Country
-                    onCountrySelected={onSelectCountry}
-                    countries={countries}
-                    name="Country1"
-                  />
-                </Card.Body>
-                <Card.Footer>
-                  <div className="d-flex justify-content-center">
-                    {country1Icon}
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-            <Col>
-              <Card>
-                <Card.Header>Dados do segundo país</Card.Header>
-                <Card.Body>
-                  <Country
-                    onCountrySelected={onSelectCountry}
-                    countries={countries}
-                    name="Country2"
-                  />
-                </Card.Body>
-                <Card.Footer>
-                  <div className="d-flex justify-content-center">
-                    {country2Icon}
-                  </div>
-                </Card.Footer>
-              </Card >
-            </Col>
-          </Form.Row>
-        </Form>
-      </LoadingScreen>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <LoadingScreen
+          loading={countries.length === 0}
+          bgColor='#e9ecef'
+          spinnerColor='#9ee5f8'
+          textColor='#676767'
+          text='Carregando dados...'
+        >
+
+          <div className="justify-content-center align-items-center">
+            <Form>
+              <Form.Row>
+                <Col>
+                  <Card border="info">
+                    <Card.Header className="info"> Dados do primeiro país </Card.Header>
+                    <Card.Body>
+                      <Country
+                        onCountrySelected={onSelectCountry}
+                        countries={countries}
+                        name="Country1"
+                      />
+                      {country1 && country2 ? <CountryCompare thisCountry={country1} compareCountry={country2} /> : null}
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card border="info">
+                    <Card.Header>Dados do segundo país</Card.Header>
+                    <Card.Body>
+                      <Country
+                        onCountrySelected={onSelectCountry}
+                        countries={countries}
+                        name="Country2"
+                      />
+                      {country1 && country2 ? <CountryCompare thisCountry={country2} compareCountry={country1} /> : null}
+                    </Card.Body>
+                  </Card >
+                </Col>
+              </Form.Row>
+            </Form>
+          </div>
+
+          <hr className="my-4"/>
+          <BigMacIndex />
+          <hr className="my-4"/>
+          <BrasilInfo />
+        </LoadingScreen>
+      </Container>
+    </>
   );
 }

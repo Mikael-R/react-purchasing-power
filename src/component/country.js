@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
-import CurrencyInput from 'react-currency-input'
 import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup'
 import CountryInfo from './country-info'
 import * as apiService from '../service/backend-api-service'
 import Loading from './loading'
@@ -22,7 +20,7 @@ export default function Country(props) {
     function handleSelect(country) {
 
         setLoading(true)
-        apiService.getCountryInfo(country.value).then(info => {
+        apiService.getCountryInfo({ country: country.value }).then(info => {
 
             setLoading(false)
             setCountryInfo(info.data)
@@ -40,8 +38,15 @@ export default function Country(props) {
             <Form.Group>
                 <Select
                     options={countries}
-                    onChange={handleSelect} 
-                    placeholder={"Selecione um país..."}/>
+                    onChange={handleSelect}
+                    placeholder={"Selecione um país..."}
+                    styles={{
+                        control: (base, state) => ({
+                            ...base,
+                            borderColor: '#17a2b8',
+                            boxShadow: state.isFocused ? '0 0 1px #17a2b8' : 'none',
+                        })
+                    }} />
             </Form.Group>
 
             {isLoading ? <Loading /> : <CountryInfo countryInfo={countryInfo} />}
