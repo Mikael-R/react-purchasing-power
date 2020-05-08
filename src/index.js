@@ -1,11 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from '@reach/router'
 import './index.css';
 import App from './App';
+import PrivacyPolicy from './component/policy-privacy'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
-  <App />,
+  <Router>
+    <App path="/" />
+    <PrivacyPolicy path="/privacy-policy" />
+  </Router>
+  ,
   document.getElementById('root')
 );

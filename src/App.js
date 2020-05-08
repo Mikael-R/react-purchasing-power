@@ -11,6 +11,7 @@ import CountryCompare from './component/country-compare'
 import BrasilInfo from './component/brazil-info'
 import Header from './component/header'
 import BigMacIndex from './component/big-mac-index'
+import { Link } from '@reach/router'
 
 export default function App() {
 
@@ -79,10 +80,16 @@ export default function App() {
             </Form>
           </div>
 
-          <hr className="my-4"/>
+          <hr className="my-4" />
           <BigMacIndex />
-          <hr className="my-4"/>
+          <hr className="my-4" />
           <BrasilInfo />
+
+          <div className="justify-content-center align-items-center">
+            <Link to="/privacy-policy" target="_blank">
+              Política de privacidade
+            </Link>
+          </div>
         </LoadingScreen>
       </Container>
     </>
