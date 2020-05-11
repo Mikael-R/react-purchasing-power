@@ -20,10 +20,19 @@ export default function App() {
   const [country2, setSelectedCountry2] = useState(null)
 
   useEffect(() => {
-    apiService.getCountries().then(
-      countries => setCountries(countries.data),
-      err => console.log(err)
-    )
+    apiService.getCountries().then(countries => {
+
+      const sorted = countries.data.sort((a, b) => {
+        if (a.name < b.name)
+          return -1
+        else if (a.name > b.name)
+          return 1
+
+        return 0
+      });
+      setCountries(countries.data)
+
+    }, err => console.log(err))
   }, [])
 
   function onSelectCountry(country, elementName) {
