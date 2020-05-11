@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Purchasing Power",
+  "name": "Purchasing Power | Comparador de poder de compra",
   "icons": [
     {
       "src": "favicon.ico",
@@ -11,5 +11,6 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "Um comparador de poder de compra, utiliza o método Índice Big Mac para comparar o poder de compra da moeda local em ambiente estrangeiro e o método Quantidade de Big Mac por salário mínimo para comparar o poder de compra nacional"
 }
