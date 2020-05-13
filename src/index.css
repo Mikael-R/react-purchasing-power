@@ -1,6 +1,5 @@
 body {
-  padding: 2rem 2rem;
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace !important;
+  font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f1f1f1 !important;
@@ -14,4 +13,20 @@ code {
 .card-header {
   background-color: #17a2b8 !important;
   color: white;
+}
+
+p {
+  text-indent: 2rem;
+}
+
+table p {
+  text-indent: 0;
+}
+
+.content {
+  padding-top: 5rem;
+}
+
+.footer {
+  padding: 1rem;
 }

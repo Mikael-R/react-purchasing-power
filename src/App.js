@@ -9,9 +9,9 @@ import LoadingScreen from 'react-loading-screen'
 import * as apiService from './service/backend-api-service'
 import CountryCompare from './component/country-compare'
 import BrasilInfo from './component/brazil-info'
-import Header from './component/header'
 import BigMacIndex from './component/big-mac-index'
-import { Link } from '@reach/router'
+import NationalPurchasingPower from './component/national-purchasing-power'
+import Footer from './component/footer'
 
 export default function App() {
 
@@ -22,7 +22,7 @@ export default function App() {
   useEffect(() => {
     apiService.getCountries().then(countries => {
 
-      const sorted = countries.data.sort((a, b) => {
+      countries.data.sort((a, b) => {
         if (a.name < b.name)
           return -1
         else if (a.name > b.name)
@@ -46,7 +46,6 @@ export default function App() {
 
   return (
     <>
-      <Header />
       <Container>
         <LoadingScreen
           loading={countries.length === 0}
@@ -86,21 +85,23 @@ export default function App() {
                   </Card >
                 </Col>
               </Form.Row>
+              <hr className="my-4" />
+              <Form.Row>
+                <Col>
+                  <BigMacIndex />
+                </Col>
+                <Col>
+                  <NationalPurchasingPower />
+                </Col>
+              </Form.Row>
+              <hr className="my-4" />
+              <BrasilInfo />
             </Form>
           </div>
 
-          <hr className="my-4" />
-          <BigMacIndex />
-          <hr className="my-4" />
-          <BrasilInfo />
-
-          <div className="justify-content-center align-items-center">
-            <Link to="/privacy-policy" target="_blank">
-              Política de privacidade
-            </Link>
-          </div>
         </LoadingScreen>
       </Container>
+      <Footer />
     </>
   );
 }

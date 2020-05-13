@@ -4,14 +4,20 @@ import { Router } from '@reach/router'
 import './index.css';
 import App from './App';
 import PrivacyPolicy from './component/policy-privacy'
+import Header from './component/header'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
-  <Router>
-    <App path="/" />
-    <PrivacyPolicy path="/privacy-policy" />
-  </Router>
+  <>
+    <Header />
+    <div className="content">
+      <Router>
+        <App path="/" />
+        <PrivacyPolicy path="/privacy-policy" />
+      </Router>
+    </div>
+  </>
   ,
   document.getElementById('root')
 );
