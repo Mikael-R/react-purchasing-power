@@ -12,6 +12,7 @@ import BrasilInfo from './component/brazil-info'
 import BigMacIndex from './component/big-mac-index'
 import NationalPurchasingPower from './component/national-purchasing-power'
 import Footer from './component/footer'
+import Fontes from './component/fontes'
 
 export default function App() {
 
@@ -54,7 +55,6 @@ export default function App() {
           textColor='#676767'
           text='Carregando dados...'
         >
-
           <div className="justify-content-center align-items-center">
             <Form>
               <Form.Row>
@@ -97,8 +97,9 @@ export default function App() {
               <hr className="my-4" />
               <BrasilInfo />
             </Form>
+            <hr className="my-4" />
+            <Fontes />
           </div>
-
         </LoadingScreen>
       </Container>
       <Footer />
