@@ -9,7 +9,7 @@ export default function CountryInfo(props) {
         return null
     }
 
-    const { bmi, symbol, minWage, date } = props.countryInfo
+    const { bmi, symbol, minWage, date, country } = props.countryInfo
 
     return (
         <ListGroup variant="flush">
@@ -28,7 +28,12 @@ export default function CountryInfo(props) {
                 <h5 className="mb-1"> Salário mínimo: {format(minWage, symbol)} </h5>
                 <p className="mb-1">
                     <small> Ano: {date} </small>
-                    <br /> <small className="text-muted"> Dados de salário são coletados em: <a href="https://pt.countryeconomy.com/mercado-laboral/salario-minimo-nacional"> Country Economy</a> </small>
+                    <br /> <small className="text-muted"> Dados de salário foram coletados em: 
+                        { country === 'Brasil' 
+                            ? <a href="https://www.quandl.com/data/ECONOMIST-The-Economist-Big-Mac-Index"> Quandl </a>
+                            :  <a href="https://pt.countryeconomy.com/mercado-laboral/salario-minimo-nacional"> Country Economy</a> 
+                        }
+                    </small>
                 </p>
 
             </ListGroup.Item>
