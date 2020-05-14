@@ -58,11 +58,11 @@ export default function CountryCompare(props) {
                     <p className="mb-1"> Big Mac Index</p> {bmiDiff > 0 ? icon : null}
                 </div>
 
-                {bmiDiff === 0
-                    ? <small className="text-muted"> Ambos os países tem o mesmo valor do Big Mac em dólar, tanto faz então! </small>
+                {!bmiDiff
+                    ? <small className="text-muted"> Ambos os países tem o mesmo valor do Big Mac em dólar, tanto faz se compra aqui ou lá então! </small>
                     :
                     bmiDiff > 0
-                ? <small className="text-muted"> Se converter a moeda de {thisCountry.country} em dólar, você poderá comprar mais ou menos {format(bmiDiff, '', 2)} Big Mac em {compareCountry.country}</small>
+                ? <small className="text-muted"> Se converter a moeda do(a) {thisCountry.country} em dólar, você poderá comprar mais ou menos {format(bmiDiff, '', 2)} Big Macs no(a) {compareCountry.country}</small>
                         : <small className="text-muted"> É melhor comer Big Mac aqui antes de viajar </small>
                     }
 
@@ -73,7 +73,7 @@ export default function CountryCompare(props) {
                 </div>
                 {
                     thisCountry.country
-                        ? <small className="text-muted"> Em {thisCountry.country} você pode comprar mais ou menos {format(thisCountry.minWage / thisCountry.bmi.local_price, '', 0)} Big Mac</small>
+                        ? <small className="text-muted"> No(a) {thisCountry.country} você pode comprar mais ou menos {format(thisCountry.minWage / thisCountry.bmi.local_price, '', 0)} Big Macs</small>
                         : <div className="alert alert-danger text-center">Este país não tem todos os dados para comparação</div>
                 }
             </ListGroup.Item>

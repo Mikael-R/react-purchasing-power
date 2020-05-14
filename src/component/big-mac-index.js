@@ -20,9 +20,19 @@ export default function BigMaxIndex() {
             é de 1 dólar para 3 reais. Comparada à taxa de câmbio real, se com 1 dólar é possível trocar por mais do que 3
       reais, significa que o Real está desvalorizado frente ao Dólar</p>
 
-            <small className="text-muted"> Texto do site <a href="https://www.dicionariofinanceiro.com/big-mac-index/"> diário
-        financeiro </a></small>
-
+            <h5> Fontes </h5>
+            <a href="https://pt.wikipedia.org/wiki/%C3%8Dndice_Big_Mac"
+                target="_blank"
+                rel="noopener noreferrer"> Índice Big Mac - Wikipédia </a> <br />
+            <a href="https://www.dicionariofinanceiro.com/big-mac-index/"
+                target="_blank"
+                rel="noopener noreferrer"> Índice Big Mac - Dicionário Financeiro </a> <br />
+            <a href="https://pt.wikipedia.org/wiki/Paridade_do_poder_de_compra"
+                target="_blank"
+                rel="noopener noreferrer"> Paridade do Poder de Compra - Wikipédia </a> <br />
+            <a href="https://www.dicionariofinanceiro.com/paridade-poder-compra/"
+                target="_blank"
+                rel="noopener noreferrer"> Paridade do Poder de Compra - Dicionário Financeiro </a> <br />
         </>
     )
 }
